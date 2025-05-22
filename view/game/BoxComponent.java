@@ -52,4 +52,12 @@ public class BoxComponent extends JComponent {
     public void setCol(int col) {
         this.col = col;
     }
+
+   public int getBlockId() {
+        if (getWidth() == 50 && getHeight() == 50) return 1; // 1×1
+        if (getWidth() == 100 && getHeight() == 50) return 2; // 1×2
+        if (getWidth() == 50 && getHeight() == 100) return 3; // 2×1
+        if (getWidth() == 100 && getHeight() == 100) return 4; // 2×2
+        return 0;
+    }
 }
