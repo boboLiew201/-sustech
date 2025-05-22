@@ -32,7 +32,14 @@ public class GamePanel extends ListenerPanel {
         this.setSize(model.getWidth() * GRID_SIZE + 4, model.getHeight() * GRID_SIZE + 4);
         this.model = model;
         this.selectedBox = null;
-        initialGame();
+        initialGame(model.getMatrix());
+    }
+
+    public void resetSteps() {
+        this.steps = 0;
+        if (stepLabel != null) {
+            stepLabel.setText("Start"); // Reset to "Start"
+        }
     }
 
     /*
@@ -42,13 +49,17 @@ public class GamePanel extends ListenerPanel {
                         {1, 2, 2, 1, 0},
                         {1, 1, 1, 1, 1}
      */
-    public void initialGame() {
+
+
+
+    public void initialGame(int [][] matrix) {
         this.steps = 0;
+
         //copy a map
-        int[][] map = new int[model.getHeight()][model.getWidth()];
+        int[][] map = new int[matrix.length][matrix[0].length];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                map[i][j] = model.getId(i, j);
+                map[i][j] = matrix[i][j];
             }
         }
         //build Component
@@ -85,6 +96,20 @@ public class GamePanel extends ListenerPanel {
             }
         }
         this.repaint();
+    }
+
+    public void clearAllBoxFromPanel(){
+        for(BoxComponent box : boxes){
+            removeBoxFromPanel(box);
+        }
+        this.boxes.clear();
+        this.repaint();
+    }
+
+    public BoxComponent removeBoxFromPanel(BoxComponent box){
+        this.remove(box);
+        this.revalidate();
+        return box;
     }
 
     @Override
